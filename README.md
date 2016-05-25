@@ -2,41 +2,20 @@
 
 ## Description
 
-Design and implement a RESTful web service to facilitate a user authentication system. The authentication mechanism should be *token based*. Requests and responses should be in **JSON**.
+I implemented this in RoR using JWT because of the gem support.  Because JWT are "self contained" (store expiration in the token) in order to enforce logout, I chose to store the token in the db so that once a user logs out, that token could be "expired" server side.  Therefore to login, the server checks the token against the token in the db for that user to make sure they haven't logged out, in addition to verifying the token itself is valid and not expired.  Also, due to the implementation I used, the User model has a password_digest field instead of password.  It would be trivial to add a field called "password" if required.
 
-## Requirements
+## Setup
 
-**Models**
+1. requires ruby >= 2.3.0
+2. run 'bundle install'
+3. requires postgres to be running locally
+4. run 'rake db:create'
+5. run 'rake db:migrate'
+6. run 'rails s'
+7. run 'rake test' to run tests
 
-The **User** model should have the following properties (at minimum):
+## Enhancements
 
-1. name
-2. email
-3. password
-
-You should determine what, *if any*, additional models you will need.
-
-**Endpoints**
-
-All of these endpoints should be written from a user's perspective.
-
-1. **User** Registration
-2. Login (*token based*) - should return a token, given *valid* credentials
-3. Logout - logs a user out
-4. Update a **User**'s Information
-5. Delete a **User**
-
-**README**
-
-Please include a readme file that explains your thinking, how to setup and run the project, and a description of what enhancements you might make if you had more time.
-
-**Additional Info**
-
-- We expect this project to take a few hours to complete
-- You can use Rails/Sinatra, Python, Go, node.js or shiny-new-framework X, as long as you tell us why you chose it and how it was a good fit for the challenge. 
-- Feel free to use whichever database you'd like; we suggest Postgres. 
-- Bonus points for security, specs, etc. 
-- Do as little or as much as you like.
-
-Please fork this repo and commit your code into that fork.  Show your work and process through those commits.
-
+1. token refresh function
+2. different access permissions for different users (admin, etc.)
+3. ability to have multiple tokens per user (for multiple devices)
