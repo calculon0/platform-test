@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
-  resources :users, only: [:create, :update, :destroy], constraints: { format: 'json' }
+  scope constraints: { format: 'json' } do
+    resources :users, only: [:create, :update, :destroy]
 
-  post '/login', to: 'sessions#login'
-  get '/logout', to: 'sessions#logout'
+    post '/login', to: 'sessions#login'
+    get '/logout', to: 'sessions#logout'
+  end
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

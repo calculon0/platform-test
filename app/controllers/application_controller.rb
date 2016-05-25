@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   private
   def authenticate_session
     authenticate
-    if current_user.jwt != bearer_token
+    if current_user && current_user.jwt != bearer_token
       head :unauthorized and return
     end
   end

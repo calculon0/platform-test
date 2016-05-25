@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     end
     user = User.new(user_params)
     if user.save
-      head :ok and return
+      render json: user, status: :ok
     else
       head :bad_request
     end
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     end
 
     if current_user.update(user_params)
-      head :ok
+      render json: current_user, status: :ok
     else
       head :bad_request
     end
