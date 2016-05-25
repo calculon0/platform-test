@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include Knock::Authenticable
+  
   before_action :ensure_json_request  
 
   def ensure_json_request  
