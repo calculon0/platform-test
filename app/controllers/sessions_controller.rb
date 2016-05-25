@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 
   def login
     unless params.dig(:session, :email) && params.dig(:session, :password)
-      head :bad_request and return
+      head :unauthorized and return
     end
     user = User.find_by(email: params[:session][:email])
     if user && user.authenticate(params[:session][:password])
@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
       user.update(jwt: token)
       render json: {token: token}
     else
-      head :bad_request
+      head :unauthorized
     end
   end
 

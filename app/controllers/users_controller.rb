@@ -9,15 +9,15 @@ class UsersController < ApplicationController
     end
     user = User.new(user_params)
     if user.save
-      render json: user, status: :ok
+      render json: user, status: :created
     else
       head :bad_request
     end
   end
 
   def update
-    unless params[:id] == current_user.id
-      head :not_authorized and return
+    unless params[:id].to_i == current_user.id
+      head :unauthorized and return
     end
 
     if current_user.update(user_params)
@@ -28,8 +28,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    unless params[:id] == current_user.id
-      head :not_authorized and return
+    unless params[:id].to_i == current_user.id
+      head :unauthorized and return
     end
 
     current_user.destroy
